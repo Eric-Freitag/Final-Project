@@ -3,13 +3,7 @@ library(dplyr)
 library(ggplot2)
 
 vgSales <- read.csv("R/data/vgsales.csv")
-renameVgSales <- rename(vgSales, 
-                        North_America = NA_Sales,
-                        Europe = EU_Sales,
-                        Japan = JP_Sales,
-                        Other = Other_Sales,
-                        Global = Global_Sales)
-longSales <- pivot_longer(vgSales,)
+
 
 # Each of us will source our own R file here
 # Notice that the data folder is on the R folder
