@@ -1,3 +1,5 @@
+library(tidyverse)
+
 vgSales <- read.csv("R/data/vgsales.csv")
 
 # Rename column using basic R: an exercise in clunkiness :)

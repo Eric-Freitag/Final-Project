@@ -14,6 +14,9 @@ source("R/developer_chart.R")
 
 # Server
 server <- function(input, output) {
+  
+    #### ERIC'S PART 
+  
     # Each of us will get his own input/output variable
     # For example, person who does genre will write:
     # output$genre <- renderPlot([his_function_here])
@@ -63,6 +66,25 @@ server <- function(input, output) {
              x = "Publisher",
              y = "Sales")
     })
+    
+    
+    #### HUGH'S PART
+    gernePlotData <- reactive({getGenrePlotData(input$region, input$period)})
+    
+    output$genreChart <- renderPlot({
+      if (nrow(gernePlotData()) != 0) {
+        getGenrePlot(gernePlotData())
+      }
+    })
+    
+    output$textChart <- renderText({
+      if (nrow(gernePlotData()) == 0) {
+        return("There are no genres in the selected subset that have non-trivial sales figures.")
+      }
+    })
+    
+    
+    #### DAVID's PART
 }
 
 shinyServer(server)
