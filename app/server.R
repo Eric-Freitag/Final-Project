@@ -2,7 +2,7 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 
-vgSales <- read.csv("R/data/vgsales.csv")
+vgSales <- read.csv("../app/R/data/vgsales.csv")
 
 
 # Each of us will source our own R file here
@@ -14,18 +14,19 @@ source("R/developer_chart.R")
 
 # Server
 server <- function(input, output) {
+  
+    #### ERIC'S PART 
+  
     # Each of us will get his own input/output variable
     # For example, person who does genre will write:
     # output$genre <- renderPlot([his_function_here])
   
-    # I do not know of a way to put reactive({}) in a helper file
-    # If so I could clean this up quite a bit
     publisherData <- reactive({
       longSales %>% 
-        filter(Year %in% range(input$yearRange)) %>%
+        filter(Year %in% range(c(input$yearRange[1],input$yearRange[2]))) %>%
         filter(Region == input$radio) %>% 
         arrange(desc(Sales)) %>% 
-        head(input$topGames) %>% 
+        head(input$nGames) %>% 
         group_by(Publisher) %>% 
         summarise(pubSales = sum(Sales)) %>% 
         arrange(desc(pubSales))
@@ -35,24 +36,18 @@ server <- function(input, output) {
     # must contain at least one non-missing element, got none."
     # when I called the other way with slider input in UI.
     # does this indicate a problem with my plot not my shiny?
-    output$topGames <- renderUI({ sliderInput("nGames",
-                                              "Number of Top Games",
-                                              min = 5,
-                                              max = 500,
-                                              value = 100) })
-    output$market <- renderUI({ radioButtons("radio",
-                                             "Which Market?",
-                                             choices = list("North America" = 1,
-                                                            "Europe" = 2,
-                                                            "Japan" = 3,
-                                                            "Other" = 4,
-                                                            "Global" = 5),
-                                                            selected = 1) })
-    output$range <- renderUI({ sliderInput("yearRange",
-                                           "Years to Select",
-                                           min = 1980, 
-                                           max = 2016,
-                                           value = c(2010, 2015)) })
+   
+    # publisherData <- longSales %>% 
+    #   filter(Year %in% range(c(2000, 2005))) %>%
+    #   filter(Region == "Global") %>% 
+    #   arrange(desc(Sales)) %>% 
+    #   head(100) %>% 
+    #   group_by(Publisher) %>% 
+    #   summarise(pubSales = sum(Sales)) %>% 
+    #   arrange(desc(pubSales))
+    output$selected_var <- renderText({ 
+      paste("You have selected", input$radio)
+    })
     
     
     output$publishers <- renderPlot({
@@ -63,6 +58,25 @@ server <- function(input, output) {
              x = "Publisher",
              y = "Sales")
     })
+    
+    
+    #### HUGH'S PART
+    gernePlotData <- reactive({getGenrePlotData(input$region, input$period)})
+    
+    output$genreChart <- renderPlot({
+      if (nrow(gernePlotData()) != 0) {
+        getGenrePlot(gernePlotData())
+      }
+    })
+    
+    output$textChart <- renderText({
+      if (nrow(gernePlotData()) == 0) {
+        return("There are no genres in the selected subset that have non-trivial sales figures.")
+      }
+    })
+    
+    
+    #### DAVID's PART
 }
 
 shinyServer(server)
