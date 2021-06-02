@@ -11,7 +11,7 @@ vgSales <- read.csv("R/data/vgsales.csv")
 
 source("R/genre_chart.R")
 source("R/developer_chart.R")
-
+source("R/platform_chart.R")
 # Server
 server <- function(input, output) {
   
@@ -85,6 +85,16 @@ server <- function(input, output) {
     
     
     #### DAVID's PART
+    PlatformData <- reactive({
+      vg <- filter(longRegion, input$region == Region)
+      return(vg)
+    })
+    
+    output$platformChart <- renderPlot({
+      updateData <- PlatformData()
+      updateData %>% ggplot(aes(x = Platform, y = Sales))
+      geom_bar()
+    })
 }
 
 shinyServer(server)

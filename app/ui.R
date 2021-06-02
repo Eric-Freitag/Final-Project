@@ -7,7 +7,20 @@ ui <- fluidPage(
     tabsetPanel(
         # Each of us will edit one tab panel
         
-        tabPanel("Tab 1"),
+        tabPanel("Platform Comparison",
+                 sidebarPanel(
+                     radioButtons("region", label = "Select a region",
+                                  choices = list("North America" = "North America",
+                                                 "Europe" = "Europe",
+                                                 "Japan" = "Japan",
+                                                 "Other" = "Other",
+                                                 "Global" = "Global")
+                     )
+                 ),
+                 mainPanel(
+                     plotOutput("platformChart")
+                 )
+        ),
         
         
         #### HUGH
