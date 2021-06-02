@@ -31,11 +31,6 @@ server <- function(input, output) {
         summarise(pubSales = sum(Sales)) %>% 
         arrange(desc(pubSales))
     })
-    # I should use renderUI/uiOutput right?
-    # Getting same: "Warning: Error in checkHT: invalid 'n' -
-    # must contain at least one non-missing element, got none."
-    # when I called the other way with slider input in UI.
-    # does this indicate a problem with my plot not my shiny?
    
     # publisherData <- longSales %>% 
     #   filter(Year %in% range(c(2000, 2005))) %>%
@@ -45,18 +40,22 @@ server <- function(input, output) {
     #   group_by(Publisher) %>% 
     #   summarise(pubSales = sum(Sales)) %>% 
     #   arrange(desc(pubSales))
-    output$selected_var <- renderText({ 
-      paste("You have selected", input$radio)
+    output$caption <- renderText({ 
+      paste("The top selling", input$nGames, " games for the years", 
+            input$yearRange[1], " to ", input$yearRange[2], 
+            " were published by ", nrow(publisherData()), "companies.")
     })
     
     
     output$publishers <- renderPlot({
-      ggplot(publisherData(), aes(x = pubSales, col = Publisher)) +
-        geom_histogram() +
-        labs(title = "Sales Numbers for Publishers for Popular Games",
-             # I need a way to tag each bin with the name of the developer"
-             x = "Publisher",
-             y = "Sales")
+      ggplot(publisherData(), aes(x = Publisher, y = pubSales), 
+             position = position_dodge(preserve = 'single')) +
+        geom_bar(stat='identity') +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+        # labs(title = "Sales Numbers for Publishers of Popular Games",
+        #      # I need a way to tag each bin with the name of the developer"
+        #      x = "Publisher",
+        #      y = "Sales")
     })
     
     

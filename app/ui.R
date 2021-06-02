@@ -77,7 +77,7 @@ ui <- fluidPage(
                  
                  mainPanel(
                      plotOutput("publishers"),
-                     textOutput("selected_var")
+                     textOutput("caption")
                      
                  )
         )
