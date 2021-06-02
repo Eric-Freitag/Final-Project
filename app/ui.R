@@ -53,13 +53,13 @@ ui <- fluidPage(
         
         
         #### ERIC
-        tabPanel("Publisher Histogram",
+        tabPanel("Publisher Comparison",
                  sidebarPanel(
                      sliderInput("nGames",
                                  "Number of Top Games",
                                  min = 5,
-                                 max = 500,
-                                 value = 100),
+                                 max = 100,
+                                 value = 25),
                      radioButtons("radio",
                                   "Which Market?",
                                   choices = list("North America" = "North America",
@@ -72,12 +72,15 @@ ui <- fluidPage(
                                  "Years to Select",
                                  min = 1980, 
                                  max = 2016,
-                                 value = c(2010, 2015))
+                                 value = c(2010, 2015), sep="")
                  ),
                  
                  mainPanel(
                      plotOutput("publishers"),
-                     textOutput("caption")
+                     br(),
+                     textOutput("caption"),
+                     br(),
+                     textOutput("note")
                      
                  )
         )
