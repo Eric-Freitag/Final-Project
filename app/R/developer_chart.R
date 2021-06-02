@@ -22,11 +22,14 @@ longSales <- pivot_longer(renameVgSales, 7:11,
 # Instead it gets the sales for the top X games and groups them by publisher.
 # Then it computes the sum of sales for each publisher in the top X games
 
-publisherData <- longSales %>% 
-    filter(Year %in% range(c(2000, 2005))) %>%
-    filter(Region == "Global") %>% 
-    arrange(desc(Sales)) %>% 
-    head(100) %>% 
-    group_by(Publisher) %>% 
-    summarise(pubSales = sum(Sales)) %>% 
-    arrange(desc(pubSales))
+# Example for testing/debugging
+# publisherData <- longSales %>% 
+#     filter(Year %in% range(c(2000, 2005))) %>%
+#     filter(Region == "Global") %>% 
+#     arrange(desc(Sales)) %>% 
+#     head(100) %>% 
+#     group_by(Publisher) %>% 
+#     summarise(pubSales = sum(Sales)) %>% 
+#     arrange(desc(pubSales))
+
+
