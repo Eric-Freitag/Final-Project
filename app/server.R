@@ -31,9 +31,9 @@ server <- function(input, output) {
         summarise(pubSales = sum(Sales)) %>% 
         arrange(desc(pubSales))
     })
-   
-   
-    output$caption <- renderText({ 
+     
+    
+    output$reactiveCaption <- renderText({ 
       paste("The top selling", input$nGames, " games for the years", 
             input$yearRange[1], " to ", input$yearRange[2], " in the selected 
             region were published by ", nrow(publisherData()), "companies.",
@@ -44,6 +44,26 @@ server <- function(input, output) {
             publisherData()$Publisher[3], " with ", publisherData()$pubSales[2],
             " and ", publisherData()$pubSales[3], " units sold respectively."
             )
+    })
+    
+    
+    output$publisherAnalysis <- renderText({
+      paste("In the earliest years of the dataset, (80-83) Atari had the most 
+            sales in hit games. After 1983, Nintendo took the lead and remained
+            strong throughout the rest of the dataset. Sony gave Nintendo some
+            notable competition in the 90's and early 00's, with about half the
+            sales that Nintendo had in the same interval, with no other 
+            publisher getting close to the numbers of these top two. Sony falls 
+            oout of the top two after the mid 00's, though it still reamins a 
+            key player. In the more recent parts of the dataset 
+            Nintendo maintained its crushing dominance in Japan, while markets 
+            besides Japan saw a robust widening of the field, with Activision, 
+            Electronic Arts and Microsoft, neack and neck or with, or overtaking
+            Nintendo in various markets. In the 'Other' market, this trend 
+            started in the mid 90's, showing that the regions that the data 
+            collectors considered miscellaneous and less important were actually
+            key trend setters for the rest of the world besides Japan.
+            ")
     })
     
     output$note <- renderText({
