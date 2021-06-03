@@ -23,7 +23,7 @@ server <- function(input, output) {
   
     publisherData <- reactive({
       longSales %>% 
-        filter(Year %in% range(c(input$yearRange[1],input$yearRange[2]))) %>%
+        filter(between(Year, input$yearRange[1],input$yearRange[2])) %>%
         filter(Region == input$radio) %>% 
         arrange(desc(Sales)) %>% 
         head(input$nGames) %>% 
