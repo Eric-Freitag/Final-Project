@@ -100,7 +100,9 @@ ui <- fluidPage(
                  mainPanel(
                      plotOutput("publishers"),
                      br(),
-                     textOutput("caption"),
+                     textOutput("reactiveCaption"),
+                     br(),
+                     textOutput("publisherAnalysis"),
                      br(),
                      textOutput("note")
                      
