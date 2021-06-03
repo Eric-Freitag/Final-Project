@@ -9,7 +9,7 @@ ui <- fluidPage(
         
         tabPanel("Platform Comparison",
                  sidebarPanel(
-                     radioButtons("region", label = "Select a region",
+                     radioButtons("region1", label = "Select a region",
                                   choices = list("North America" = "North America",
                                                  "Europe" = "Europe",
                                                  "Japan" = "Japan",
@@ -18,8 +18,17 @@ ui <- fluidPage(
                      )
                  ),
                  mainPanel(
-                     plotOutput("platformChart")
-                 )
+                     plotOutput("platform_Chart")
+                 ),
+                 h4("From the data above, we can see that in the North American market, the xbox 360, which is owned by the
+                    company Microsoft, has the highest sales over the year of 1980 to 2020, and the second place is PS2, and their 
+                    sales number are really close to each other, however, the Sony play station have more platforms than microsoft."),
+                 
+                 h4("Moreover, from a global perspective, the play station have the highest sales number among all other platforms
+                    owned by other companies, such as Europe. There is an excpetion. Japan is where both Sony and Nintendo originated,
+                    but from the statistical perspective, the Nintendo seems to be more favored by the people there, and the platforms by
+                    micorsoft such as xbox 360 have extremely low sales over the 40 years period, expecially when comparing with the sales
+                    in North America.")
         ),
         
         

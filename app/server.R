@@ -89,14 +89,18 @@ server <- function(input, output) {
     
     #### DAVID's PART
     PlatformData <- reactive({
-      vg <- filter(longRegion, input$region == Region)
-      return(vg)
+      vg <- longRegion %>% 
+        filter(Region == input$region1) %>% 
+        group_by(Platform) %>% 
+        summarise(SalesForEach = sum(Sales))
     })
     
-    output$platformChart <- renderPlot({
+    output$platform_Chart <- renderPlot({
       updateData <- PlatformData()
-      updateData %>% ggplot(aes(x = Platform, y = Sales))
-      geom_bar()
+      updateData %>% 
+        ggplot(aes(x = Platform, y = SalesForEach, fill = unique(Platform))) +
+        geom_bar(stat = "identity") +
+        ylab("Sales of each platform in Millions")
     })
 }
 
