@@ -98,8 +98,10 @@ server <- function(input, output) {
     output$platform_Chart <- renderPlot({
       updateData <- PlatformData()
       updateData %>% 
-        ggplot(aes(x = Platform, y = SalesForEach, fill = unique(Platform))) +
-        geom_bar(stat = "identity") +
+        ggplot(aes(x = Platform, y = SalesForEach)) +
+        geom_bar(stat = "identity", fill = "blue") +
+        theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1, 
+                                         face="bold"), text=element_text(size=12)) +
         ylab("Sales of each platform in Millions")
     })
 }
