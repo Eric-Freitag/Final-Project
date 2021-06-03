@@ -2,9 +2,6 @@ library(shiny)
 library(dplyr)
 library(ggplot2)
 
-vgSales <- read.csv("../app/R/data/vgsales.csv")
-
-
 # Each of us will source our own R file here
 # Notice that the data folder is on the R folder
 # Example:
@@ -46,28 +43,8 @@ server <- function(input, output) {
             )
     })
     
-    
-    output$publisherAnalysis <- renderText({
-      paste("In the earliest years of the dataset, (80-83) Atari had the most 
-            sales in hit games. After 1983, Nintendo took the lead and remained
-            strong throughout the rest of the dataset. Sony gave Nintendo some
-            notable competition in the 90's and early 00's, with about half the
-            sales that Nintendo had in the same interval, with no other 
-            publisher getting close to the numbers of these top two. Sony falls 
-            oout of the top two after the mid 00's, though it still reamins a 
-            key player. In the more recent parts of the dataset 
-            Nintendo maintained its crushing dominance in Japan, while markets 
-            besides Japan saw a robust widening of the field, with Activision, 
-            Electronic Arts and Microsoft, neack and neck or with, or overtaking
-            Nintendo in various markets. In the 'Other' market, this trend 
-            started in the mid 90's, showing that the regions that the data 
-            collectors considered miscellaneous and less important were actually
-            key trend setters for the rest of the world besides Japan.
-            ")
-    })
-    
     output$note <- renderText({
-      paste("Not that this visualization does not plot the total sales in the
+      paste("Note that this visualization does not plot the total sales in the
             year range and region input by the user. Instead, it finds the top
             games in a year range and location, then sums the sales for those 
             games as grouped by developer. The datast only includes games 

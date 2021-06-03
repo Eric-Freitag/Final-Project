@@ -3,7 +3,6 @@ library(scales)
 
 data <- read.csv("R/data/vgsales.csv", stringsAsFactors=FALSE)
 
-length(unique(data$Genre))
 salesData <- data %>% 
     pivot_longer(
         cols = ends_with("Sales"),
@@ -26,7 +25,7 @@ getGenrePlotData <- function(region, period) {
 }
 
 getGenrePlot <- function(plotData) {
-        plot <- ggplot(plotData, aes(x = Genre, y = Total_Sales)) +
+    plot <- ggplot(plotData, aes(x = Genre, y = Total_Sales)) +
         geom_bar(stat = "identity", fill = "blue") +
         scale_y_continuous(breaks = pretty_breaks()) +
         geom_text(aes(label=Total_Sales), vjust=-0.25, size = 5) +
@@ -35,7 +34,7 @@ getGenrePlot <- function(plotData) {
             plot.title = element_text(size=16, face="bold"),
             axis.title = element_text(size=14),
             axis.text = element_text(size=12)
-        )
+    )
     return(plot)
 }
 
